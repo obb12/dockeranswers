@@ -1,0 +1,8 @@
+FROM nginx:stable-alpine
+RUN apk upgrade --update-cache --available && \
+    apk add openssl certbot && \
+    rm -rf /var/cache/apk/*
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+USER webserver
+CMD ["nginx", "-g", "daemon off;"]
